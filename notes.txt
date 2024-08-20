@@ -1,0 +1,19 @@
+TFSTATE should be stored in a secure place, such as a private S3 bucket or a private Git repository. Do not store TFSTATE in a public location.
+
+TFSATE is a JSON file that contains the state of the infrastructure. It is used by Terraform to keep track of the resources that have been created and their current state. The TFSTATE file is used to determine what changes need to be made to the infrastructure when running Terraform commands such as `terraform plan` and `terraform apply`.
+
+When running Terraform commands, Terraform reads the TFSTATE file to determine the current state of the infrastructure. If the TFSTATE file is not available or is out of date, Terraform may not be able to accurately determine the current state of the infrastructure, which can lead to errors or unexpected changes to the infrastructure.
+
+
+To import existing infrastructure into Terraform, you can use the `terraform import` command. This command allows you to import existing resources into the Terraform state so that Terraform can manage them going forward.
+
+example:
+
+terraform import aws_instance.example i-1234567890abcdef0
+
+
+to show the current state of the infrastructure, you can use the `terraform show` command. This command will display the current state of the infrastructure as stored in the TFSTATE file.
+
+example:
+
+terraform show aws_instance.example
