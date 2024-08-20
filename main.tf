@@ -28,12 +28,28 @@ resource "aws_instance" "nginx-server" {
 
   // link the security group to the instance
   vpc_security_group_ids = [aws_security_group.nginx-sg.id]
+
+  tags = {
+    Name        = "nginx-server"
+    Environment = "Dev"
+    Owner       = "tres@duck.com"
+    Team        = "DevOps"
+    Project     = "Terraform"
+  }
 }
 
 // ssh key pair
 resource "aws_key_pair" "nginx-key" {
   key_name   = "nginx-key"
   public_key = file("~/.ssh/id_rsa.pub")
+
+  tags = {
+    Name        = "nginx-key"
+    Environment = "Dev"
+    Owner       = "tres@duck.com"
+    Team        = "DevOps"
+    Project     = "Terraform"
+  }
 }
 
 
@@ -65,4 +81,23 @@ resource "aws_security_group" "nginx-sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name        = "nginx-sg"
+    Environment = "Dev"
+    Owner       = "tres@duck.com"
+    Team        = "DevOps"
+    Project     = "Terraform"
+  }
+}
+
+
+output "public_ip" {
+  description = "The public IP of the nginx server"
+  value       = aws_instance.nginx-server.public_ip
+}
+
+output "public_dns" {
+  description = "The public DNS of the nginx server"
+  value       = aws_instance.nginx-server.public_dns
 }
